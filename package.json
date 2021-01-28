@@ -24,6 +24,7 @@
     "src"
   ],
   "devDependencies": {
+    "@types/dompurify": "^2.2.1",
     "autoprefixer": "^9.0.0",
     "chai": "3.5.0",
     "cypress": "3.0.1",
@@ -65,6 +66,7 @@
   },
   "homepage": "https://frappe.github.io/datatable",
   "dependencies": {
+    "dompurify": "^2.2.6",
     "hyperlist": "^1.0.0-beta",
     "lodash": "^4.17.5",
     "sortablejs": "^1.7.0"

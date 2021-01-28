@@ -1,4 +1,5 @@
 import HyperList from 'hyperlist';
+import DOMPurify from 'dompurify';
 
 export default class BodyRenderer {
     constructor(instance) {
@@ -17,7 +18,7 @@ export default class BodyRenderer {
         this.visibleRowIndices = rows.map(row => row.meta.rowIndex);
 
         if (rows.length === 0) {
-            this.bodyScrollable.innerHTML = this.getNoDataHTML();
+            this.bodyScrollable.innerHTML = DOMPurify.sanitize(this.getNoDataHTML());
             return;
         }
 
@@ -40,7 +41,7 @@ export default class BodyRenderer {
                 const rowIndex = rowViewOrder[index];
                 const row = this.datamanager.getRow(rowIndex);
                 const rowHTML = this.rowmanager.getRowHTML(row, row.meta);
-                el.innerHTML = rowHTML;
+                el.innerHTML = DOMPurify.sanitize(rowHTML);
                 return el.children[0];
             },
             afterRender: () => {
@@ -70,7 +71,7 @@ export default class BodyRenderer {
         const totalRow = this.getTotalRow();
         let html = this.rowmanager.getRowHTML(totalRow, { isTotalRow: 1, rowIndex: 'totalRow' });
 
-        this.footer.innerHTML = html;
+        this.footer.innerHTML = DOMPurify.sanitize(html);
     }
 
     getTotalRow() {
@@ -122,7 +123,7 @@ export default class BodyRenderer {
     }
 
     showToastMessage(message, hideAfter) {
-        this.instance.toastMessage.innerHTML = this.getToastMessageHTML(message);
+        this.instance.toastMessage.innerHTML = DOMPurify.sanitize(this.getToastMessageHTML(message));
 
         if (hideAfter) {
             setTimeout(() => {
