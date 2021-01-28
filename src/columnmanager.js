@@ -1,5 +1,6 @@
 import $ from './dom';
 import Sortable from 'sortablejs';
+import DOMPurify from 'dompurify';
 import {
     linkProperties,
     debounce
@@ -34,7 +35,7 @@ export default class ColumnManager {
         const columns = this.datamanager.getColumns();
 
         // refresh html
-        $('div', this.header).innerHTML = this.getHeaderHTML(columns);
+        $('div', this.header).innerHTML = DOMPurify.sanitize(this.getHeaderHTML(columns));
 
         this.$filterRow = $('.dt-row-filter', this.header);
         if (this.$filterRow) {
@@ -69,7 +70,7 @@ export default class ColumnManager {
         let dropdownClass = '.dt-dropdown__list';
 
         // attach the dropdown list to container
-        this.instance.dropdownContainer.innerHTML = this.getDropdownListHTML();
+        this.instance.dropdownContainer.innerHTML = DOMPurify.sanitize(this.getDropdownListHTML());
         this.$dropdownList = this.instance.dropdownContainer.firstElementChild;
 
         $.on(this.header, 'click', toggleClass, e => {
@@ -206,7 +207,7 @@ export default class ColumnManager {
 
             let $longestCellHTML = this.cellmanager.getCellHTML(longestCell);
             let $div = document.createElement('div');
-            $div.innerHTML = $longestCellHTML;
+            $div.innerHTML = DOMPurify.sanitize($longestCellHTML);
             let cellText = $div.querySelector('.dt-cell__content').textContent;
 
             let {

@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import {
     copyTextToClipboard,
     makeDataAttributeString,
@@ -623,7 +624,7 @@ export default class CellManager {
 
     refreshCell(cell) {
         const $cell = $(this.selector(cell.colIndex, cell.rowIndex), this.bodyScrollable);
-        $cell.innerHTML = this.getCellContent(cell);
+        $cell.innerHTML = DOMPurify.sanitize(this.getCellContent(cell));
     }
 
     toggleTreeButton(rowIndex, flag) {
